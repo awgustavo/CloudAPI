@@ -1,0 +1,21 @@
+FROM node:latest AS node_base
+
+RUN echo "NODE Version:" && node --version
+RUN echo "NPM Version:" && npm --version
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+WORKDIR /app
+
+COPY ./ ./
+
+COPY --from=node_base . .
+#RUN dotnet build --configuration Release -o out
+
+    
+RUN dotnet publish ./LiveMapApp/ --configuration Release -o out
+
+ENV DB_HOST=postgres
+
+EXPOSE 80
+
+ENTRYPOINT ["dotnet", "/app/out/LiveMapApp.dll"]
