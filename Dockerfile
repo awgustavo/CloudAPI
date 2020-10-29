@@ -9,7 +9,7 @@ RUN npm run build -- --prod
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as base
 WORKDIR /app
 
-COPY ./CloudAPI ./
+COPY ./ ./
 RUN dotnet build LiveMapApp --configuration Release -o out
 
 RUN mkdir ./out/ClientApp
