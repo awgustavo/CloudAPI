@@ -16,11 +16,16 @@ namespace LiveMapApp
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+       public static IWebHostBuilder CreateHostBuilder(string[] args)
+        {
+            var DefaultHost = Environment.GetEnvironmentVariable("DEFAULT_HOST");
+            var EnvConfig = Environment.GetEnvironmentVariable("ENV_CONFIG");
+            var builder =  WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(ic => 
+                    ic.AddJsonFile(!String.IsNullOrWhiteSpace(EnvConfig) ? EnvConfig : "appsettings.Development.json")
+                ).UseUrls(!String.IsNullOrWhiteSpace(DefaultHost) ? DefaultHost : "http://0.0.0.0:80")
+                .UseStartup<Startup>();
+            return builder;
+        }
     }
 }
