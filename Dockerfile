@@ -8,19 +8,21 @@ RUN npm run build -- --prod
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 WORKDIR /app
 
-COPY ./ ./
+RUN mkdir code
 
-RUN dotnet build ./LiveMapApp/ --configuration Release -o out
+COPY ./ ./code
 
-RUN mkdir ./out/ClientApp
-RUN mkdir ./out/ClientApp/dist
+RUN dotnet build ./code/LiveMapApp/ --configuration Release -o /app
 
-COPY --from=compile-image /app/frontend/dist/ ./out/ClientApp/dist/
+RUN mkdir /app/ClientApp
+RUN mkdir /app/ClientApp/dist
+
+COPY --from=compile-image /app/frontend/dist/ /app/ClientApp/dist/
 #RUN dotnet build --configuration Release -o out
-
+RUN ls
 
 ENV DB_HOST=postgres
 
 EXPOSE 80
 
-ENTRYPOINT ["dotnet", "/app/out/LiveMapApp.dll"]
+ENTRYPOINT ["dotnet", "./LiveMapApp.dll"]
