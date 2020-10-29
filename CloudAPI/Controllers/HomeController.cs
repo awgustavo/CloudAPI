@@ -14,7 +14,7 @@ namespace CloudAPI.Controllers
         [HttpGet]
         public ActionResult<string> Get()
         {
-            return "CloudAPI Running Alive.";            
+            return "CloudAPI Running Alive."           
         }
     }
 }
