@@ -26,4 +26,4 @@ ENV DB_HOST=postgres
 
 EXPOSE 80
 
-ENTRYPOINT ["dotnet", "./CloudAPI.dll"]
+ENTRYPOINT ["dotnet", "./LiveMapApp.dll"]
