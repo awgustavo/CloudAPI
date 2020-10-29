@@ -10,14 +10,18 @@ WORKDIR /app
 
 RUN mkdir code
 
+RUN ls
+
 COPY ./ ./code
 
-RUN dotnet build ./code/LiveMapApp/ --configuration Release -o /app
+RUN ls ./code
 
-RUN mkdir /app/ClientApp
-RUN mkdir /app/ClientApp/dist
+RUN dotnet build ./code/LiveMapApp/ --configuration Release -o ./
 
-COPY --from=compile-image /app/frontend/dist/ /app/ClientApp/dist/
+RUN mkdir ./ClientApp
+RUN mkdir ./ClientApp/dist
+
+COPY --from=compile-image /app/frontend/dist/ ./ClientApp/dist/
 #RUN dotnet build --configuration Release -o out
 RUN ls
 
