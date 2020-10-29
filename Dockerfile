@@ -18,7 +18,7 @@ RUN mkdir ./out/ClientApp/dist
 COPY --from=compile-image /app/frontend/dist/ ./out/ClientApp/dist/
 #RUN dotnet build --configuration Release -o out
 
-RUN cp -R /app/out/ /app
+RUN cp -R ./out/* ./
 
 RUN ls
 
