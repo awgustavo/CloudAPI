@@ -16,7 +16,7 @@ COPY ./ ./code
 
 RUN ls ./code
 
-RUN dotnet build ./code/LiveMapApp/ --configuration Release -o ./
+RUN dotnet build code/LiveMapApp/ --configuration Release -o ./
 
 RUN mkdir ./ClientApp
 RUN mkdir ./ClientApp/dist
